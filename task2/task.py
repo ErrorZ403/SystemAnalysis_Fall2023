@@ -41,7 +41,7 @@
 import csv
 import argparse
 
-def read_graph_from_csv(filepath):
+def _read_graph_from_csv(filepath):
     dict = {}
     with open(filepath, 'r') as table:
         csvreader = csv.reader(table)
@@ -63,42 +63,52 @@ def _get_keys(graph):
             if elem not in all_keys:
                 all_keys.append(elem)
     
-    return all_keys
+    return all_keys, len(all_keys)
 
-def count_types(graph, all_keys):
-    answer = {}
-    for key in all_keys:
-        answer[key] = [0, 0, 0, 0, 0]
+def _compute_matrix(graph, ln):
+    matrix = [[0 for _ in range(ln)] for _ in range(ln)]
+    
+    for k in graph:
+        for v in graph[k]:
+            matrix[int(k) - 1][int(v) - 1] = 1
+            matrix[int(v) - 1][int(k) - 1] = -1
 
-    q = [(list(graph.keys())[0], 0)]
-    last_key = []
-    last_deep = []
+    return matrix
 
-    while q:
-        key, deep = q.pop(0)
+def make_csv(matrix, file_name='task_res.csv'):
+    with open(file_name, 'w', newline='') as f:
+        writer = csv.writer(f, delimiter=',')
+        for row in matrix:
+            writer.writerow(row)
         
-        if last_key:
-            if deep == last_deep:
-                answer[key][4] += 1
-                answer[last_key[last_deep]][4] += 1
-            elif deep == 1:
-                answer[key][1] += 1
-            elif deep >= 2:
-                answer[key][3] += 1
-                answer[last_key][2] += 1
-        
-        
-        if key in graph:
-            answer[key][0] += len(graph[key])
-        
-        if key in graph:
-            for elem in graph[key]:
-                q.append((elem, deep+1))
 
-        last_key.append(key)
-        last_deep = deep
+def task(filename):
+    graph = _read_graph_from_csv(filename)
+    _, ln = _get_keys(graph)
+    matrix = _compute_matrix(graph, ln)
 
-    print(answer)
+    result = [[0 for _ in range(5)] for _ in range(ln)]
+
+    print(matrix)
+
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            if matrix[i][j] == 1:
+                result[i][0] += 1
+                for index, value in enumerate(matrix[j]):
+                    if value == 1:
+                        result[i][2] += 1
+            if matrix[i][j] == -1:
+                result[i][1] += 1
+                for index, value in enumerate(matrix[j]):
+                    if value == -1:
+                        result[i][3] += 1
+                    if value == 1 and index != i:
+                        result[i][4] += 1
+    make_csv(result)
+    
+    print(result)
+    
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -107,8 +117,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    graph = read_graph_from_csv(args.filepath)
-
-    all_keys = _get_keys(graph)
-
-    ans = count_types(graph, all_keys)
+    task(args.filepath)
