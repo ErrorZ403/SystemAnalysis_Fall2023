@@ -89,7 +89,7 @@ def task(filename):
 
     result = [[0 for _ in range(5)] for _ in range(ln)]
 
-    print(matrix)
+    #print(matrix)
 
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
@@ -107,7 +107,7 @@ def task(filename):
                         result[i][4] += 1
     make_csv(result)
     
-    print(result)
+    #print(result)
     
 
 if __name__ == "__main__":
