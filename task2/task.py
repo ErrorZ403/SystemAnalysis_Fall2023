@@ -88,9 +88,7 @@ def task(filename):
     matrix = _compute_matrix(graph, ln)
 
     result = [[0 for _ in range(5)] for _ in range(ln)]
-
-    #print(matrix)
-
+    
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
             if matrix[i][j] == 1:
@@ -106,8 +104,6 @@ def task(filename):
                     if value == 1 and index != i:
                         result[i][4] += 1
     make_csv(result)
-    
-    #print(result)
     
 
 if __name__ == "__main__":
