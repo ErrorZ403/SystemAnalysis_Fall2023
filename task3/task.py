@@ -44,10 +44,8 @@ def _compute_entropy_for_row(prob_matrix):
     
     return entropies
 
-def task(filename):
-    matrix = _read_relation_matrix_from_csv(filename)
+def task(matrix):
     prob_matrix = _compute_probability_matrix(matrix)
-    #print(prob_matrix)
     entropies = _compute_entropy_for_row(prob_matrix)
 
     entropy = 0.0
@@ -57,11 +55,14 @@ def task(filename):
     return entropy
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    matrix = [
+        [1,0,2,0,0],
+        [2,1,2,0,0],
+        [2,1,0,1,1],
+        [0,1,0,1,1],
+        [0,1,0,1,1],
+        [0,1,0,1,1],
+    ]
 
-    parser.add_argument('filepath')
-
-    args = parser.parse_args()
-
-    res = task(args.filepath)
+    res = task(matrix)
     print(res)
