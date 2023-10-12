@@ -88,7 +88,7 @@ def task(filename):
     matrix = _compute_matrix(graph, ln)
 
     result = [[0 for _ in range(5)] for _ in range(ln)]
-    
+
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
             if matrix[i][j] == 1:
