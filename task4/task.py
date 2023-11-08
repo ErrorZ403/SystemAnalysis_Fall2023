@@ -118,7 +118,9 @@ def task():
 
     entropy_B_A = compute_conditional_entropy(matrix, prob_matrix)
 
-    return entropy_A, entropy_B, entropy_AB, entropy_B_A
+    information_A_B = entropy_B - entropy_B_A
+
+    return entropy_A, entropy_B, entropy_AB, entropy_B_A, information_A_B
 
 if __name__ == '__main__':
     task()
