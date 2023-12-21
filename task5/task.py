@@ -85,7 +85,7 @@ def get_kernel_of_nonequal(matrix_1, matrix_2):
         if result[i] not in conc_result and visited[i] == 0:
             conc_result.append(result[i])
 
-    print(conc_result)
+    #print(conc_result)
     return conc_result
 
 def _in_kernel(value, kernel):
@@ -103,19 +103,6 @@ def _in_kernel(value, kernel):
 (7, 8), (8, 9) -> (7, 8, 9)
 => 1, [2, 3], 4, 5, 6, [7, 8], 9, 10
 '''
-
-def make_experted_res_general(expert_1, expert_2, kernel):
-    expert_list_flatten_1, expert_list_indexes_1 = make_list_from_expert(expert_1)
-    expert_list_flatten_2, expert_list_indexes_2 = make_list_from_expert(expert_2)
-
-    result = []
-
-    for i in range(len(expert_list_flatten_1)):
-        if isinstance(expert_1[i], int): 
-            expert_1[i] = [expert_1[i]]
-        for j in range(len(expert_list_flatten_2)):
-            pass
-
 
 def make_experted_res(expert_1, expert_2, kernel):
     result = []
@@ -157,7 +144,7 @@ def task():
     kernel_BC = get_kernel_of_nonequal(matrix_B, matrix_C)
     #kernel_AC = get_kernel_of_nonequal(matrix_A, matrix_C)
 
-    #make_experted_res(expert_A, expert_B, kernel_AB)
+    make_experted_res(expert_A, expert_B, kernel_AB)
     #make_experted_res(matrix_B, matrix_C, kernel_BC)
     #make_experted_res(matrix_A, matrix_C, kernel_AC)
 
